@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CyberScope Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>CyberScope Login 🔐</h2>
+    <p class="muted">Your IP: <b>{{ ip }}</b></p>
+
+    <form method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        {% if failed %}
+        <p style="color:orange;">Failed Attempts: {{ failed }} / 5</p>
+        {% endif %}
+
+        {% if captcha %}
+        <div class="card">
+            <p>Solve CAPTCHA: <b>{{ captcha_question }}</b></p>
+            <input type="number" name="captcha_answer" placeholder="Enter answer" required>
+        </div>
+        {% endif %}
+
+        <button type="submit">Login</button>
+    </form>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <p class="muted small">
+        Industry Features: Baseline Deviation • Credential Stuffing Detection • Explainable Decisions • Risk Analytics
+    </p>
+</div>
+
+</body>
+</html>

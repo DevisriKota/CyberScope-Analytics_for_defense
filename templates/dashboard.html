@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Welcome to CyberScope Dashboard</h2>
+    <p>Login Successful ✅</p>
+    <p>User: <b>{{ user }}</b></p>
+    <p>Your IP Address: <b>{{ ip }}</b></p>
+
+    <a href="/analytics"><button>View Security Analytics</button></a>
+    <br><br>
+    <a href="/logout"><button>Logout</button></a>
+</div>
+
+</body>
+</html>

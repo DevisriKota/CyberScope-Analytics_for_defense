@@ -1,0 +1,111 @@
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: "Segoe UI", sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* -------- CONTAINERS -------- */
+
+.container {
+    background: rgba(0,0,0,0.60);
+    padding: 30px;
+    border-radius: 14px;
+    width: 380px;
+    box-shadow: 0 0 20px cyan;
+    text-align: center;
+}
+
+.wide {
+    background: rgba(0,0,0,0.60);
+    padding: 30px;
+    border-radius: 14px;
+    width: 92vw;
+    max-width: 1100px;
+    box-shadow: 0 0 20px cyan;
+    color: white;
+}
+
+/* -------- FORM ELEMENTS -------- */
+
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+}
+
+button {
+    background: cyan;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* -------- TEXT -------- */
+
+.error {
+    color: #ff4d4d;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.muted {
+    color: #cfd8dc;
+}
+
+.small {
+    font-size: 12px;
+}
+
+/* -------- UI CARDS -------- */
+
+.card {
+    background: rgba(255,255,255,0.06);
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* -------- ANALYTICS STATS -------- */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 14px 0 22px 0;
+}
+
+.stat {
+    background: rgba(255,255,255,0.06);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* -------- TABLES -------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+th, td {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: rgba(0,255,255,0.20);
+}
+
+
+
+    

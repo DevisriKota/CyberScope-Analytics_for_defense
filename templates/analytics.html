@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="wide">
+    <h2>Security Analytics 📊</h2>
+
+    <div class="stats">
+        <div class="stat">Total Events<br><b>{{ total }}</b></div>
+        <div class="stat">Failures<br><b>{{ fails }}</b></div>
+        <div class="stat">Locked<br><b>{{ locked }}</b></div>
+        <div class="stat">High/Critical<br><b>{{ high }}</b></div>
+    </div>
+
+    <h3>Top Attacking IPs</h3>
+    <table>
+        <tr><th>IP</th><th>Fail Count</th></tr>
+        {% for row in top_ips %}
+        <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+        {% endfor %}
+    </table>
+
+    <h3>Recent Security Events</h3>
+    <table>
+        <tr>
+            <th>User</th><th>IP</th><th>Status</th><th>Action</th>
+            <th>Attack Type</th><th>Risk</th><th>Score</th><th>Reason</th><th>Time</th>
+        </tr>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log[0] }}</td>
+            <td>{{ log[1] }}</td>
+            <td>{{ log[2] }}</td>
+            <td>{{ log[3] }}</td>
+            <td>{{ log[4] }}</td>
+            <td>{{ log[5] }}</td>
+            <td>{{ log[6] }}</td>
+            <td style="text-align:left;">{{ log[7] }}</td>
+            <td>{{ log[8] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/dashboard"><button>Back</button></a>
+</div>
+
+</body>
+</html>
