@@ -1,52 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Security Analytics</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>CyberScope | Security Analytics</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="wide">
-    <h2>Security Analytics 📊</h2>
+<div class="wide panel analytics-highlight">
 
-    <div class="stats">
-        <div class="stat">Total Events<br><b>{{ total }}</b></div>
-        <div class="stat">Failures<br><b>{{ fails }}</b></div>
-        <div class="stat">Locked<br><b>{{ locked }}</b></div>
-        <div class="stat">High/Critical<br><b>{{ high }}</b></div>
+  <!-- Header -->
+  <div class="brand" style="margin-bottom: 16px;">
+    <h1 style="margin:0;">Security Analytics 📊</h1>
+    <p class="muted" style="margin:8px 0 0 0;">
+      Real-time view of authentication risks, detections, and user activity
+    </p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats stats-5">
+    <div class="stat stat-card">
+      <div class="stat-title">Total Events</div>
+      <div class="stat-value">{{ total }}</div>
+    </div>
+    <div class="stat stat-card">
+      <div class="stat-title">Failures</div>
+      <div class="stat-value">{{ fails }}</div>
+    </div>
+    <div class="stat stat-card">
+      <div class="stat-title">Locked</div>
+      <div class="stat-value">{{ locked }}</div>
+    </div>
+    <div class="stat stat-card">
+      <div class="stat-title">High/Critical</div>
+      <div class="stat-value">{{ high }}</div>
+    </div>
+    <div class="stat stat-card">
+      <div class="stat-title">Users</div>
+      <div class="stat-value">{{ user_count }}</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top: 18px;">
+
+    <!-- Registered users -->
+    <div class="card soft">
+      <h3 style="margin:0 0 10px 0;">Registered Users</h3>
+
+      {% if users|length == 0 %}
+        <p class="muted">No users found.</p>
+      {% else %}
+        <div class="list">
+          {% for u in users %}
+            <div class="list-row">
+              <span class="dot"></span>
+              <span>{{ u }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
 
-    <h3>Top Attacking IPs</h3>
-    <table>
-        <tr><th>IP</th><th>Fail Count</th></tr>
-        {% for row in top_ips %}
-        <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
-        {% endfor %}
-    </table>
+    <!-- Top IPs -->
+    <div class="card soft">
+      <h3 style="margin:0 0 10px 0;">Top Attacking IPs</h3>
 
-    <h3>Recent Security Events</h3>
-    <table>
-        <tr>
-            <th>User</th><th>IP</th><th>Status</th><th>Action</th>
-            <th>Attack Type</th><th>Risk</th><th>Score</th><th>Reason</th><th>Time</th>
-        </tr>
+      <table class="table table-tight">
+        <tr><th>IP</th><th>Fail Count</th></tr>
+
+        {% if top_ips|length == 0 %}
+          <tr><td colspan="2" class="muted">No failed attempts yet</td></tr>
+        {% else %}
+          {% for row in top_ips %}
+            <tr>
+              <td>{{ row[0] }}</td>
+              <td><b>{{ row[1] }}</b></td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Recent logs -->
+  <div class="card soft" style="margin-top: 18px;">
+    <h3 style="margin:0 0 10px 0;">Recent Security Events</h3>
+
+    <table class="table">
+      <tr>
+        <th>User</th><th>IP</th><th>Status</th><th>Action</th>
+        <th>Attack Type</th><th>Risk</th><th>Score</th><th>Reason</th><th>Time</th>
+      </tr>
+
+      {% if logs|length == 0 %}
+        <tr><td colspan="9" class="muted">No events yet</td></tr>
+      {% else %}
         {% for log in logs %}
-        <tr>
+          <tr>
             <td>{{ log[0] }}</td>
             <td>{{ log[1] }}</td>
-            <td>{{ log[2] }}</td>
+            <td><span class="pill {{ 'pill-ok' if log[2]=='SUCCESS' else 'pill-bad' }}">{{ log[2] }}</span></td>
             <td>{{ log[3] }}</td>
             <td>{{ log[4] }}</td>
-            <td>{{ log[5] }}</td>
-            <td>{{ log[6] }}</td>
-            <td style="text-align:left;">{{ log[7] }}</td>
+            <td><span class="pill {{ 'pill-low' if log[5]=='Low' else ('pill-mid' if log[5]=='Medium' else 'pill-high') }}">{{ log[5] }}</span></td>
+            <td><b>{{ log[6] }}</b></td>
+            <td class="left">{{ log[7] }}</td>
             <td>{{ log[8] }}</td>
-        </tr>
+          </tr>
         {% endfor %}
+      {% endif %}
     </table>
 
-    <br>
-    <a href="/dashboard"><button>Back</button></a>
+    <div style="margin-top: 14px;">
+      <a href="/dashboard"><button class="btn">Back to Dashboard</button></a>
+    </div>
+  </div>
+
 </div>
 
 </body>
