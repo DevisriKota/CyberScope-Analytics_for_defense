@@ -1,91 +1,134 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CyberScope | Login</title>
+  <title>CyberScope Login</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    /* Minimal layout fixes (no need to touch style.css) */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 14px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 520px;
+      padding: 28px;
+      border-radius: 18px;
+      background: rgba(0,0,0,0.35);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 18px 60px rgba(0,0,0,0.45);
+      backdrop-filter: blur(10px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .brand h2 { margin: 0; font-size: 34px; letter-spacing: 0.2px; }
+    .sub {
+      margin: 6px 0 18px 0;
+      opacity: 0.9;
+      font-size: 14px;
+    }
+    .field { margin: 10px 0; }
+    .field label { display:block; margin-bottom: 6px; font-weight: 600; opacity: 0.95; }
+    .actions { margin-top: 14px; display: grid; gap: 10px; }
+    .links { margin-top: 10px; font-size: 14px; }
+    .links a { text-decoration: underline; }
+    .error { margin-top: 12px; color: #ff6b6b; font-weight: 600; }
+    .meta { margin-top: 14px; opacity: 0.85; font-size: 12.5px; line-height: 1.4; }
+    .capsule {
+      display:inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      font-size: 12.5px;
+      margin-top: 8px;
+    }
+    details.demo {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      opacity: 0.95;
+    }
+    details.demo summary {
+      cursor: pointer;
+      font-weight: 600;
+      opacity: 0.95;
+      user-select: none;
+    }
+    details.demo ul { margin: 10px 0 0 18px; }
+    details.demo li { margin: 6px 0; }
+  </style>
 </head>
+
 <body>
+  <div class="page">
+    <div class="login-card">
 
-<div class="shell">
-
-  <!-- LEFT: Login -->
-  <div class="panel">
-    <div class="brand">
-      <h1>CyberScope <span style="opacity:.8;">🔐</span></h1>
-      <div class="sub">
-        <span class="badge">Your IP: <b>{{ ip }}</b></span>
-        <span class="badge">Adaptive Login Security</span>
+      <div class="brand">
+        <h2>CyberScope 🔐</h2>
+        <span class="capsule">Adaptive Login Security</span>
       </div>
-    </div>
 
-    <div class="content">
-      <form class="form" method="POST">
-        <div>
-          <div class="label">Username</div>
-          <input class="input" type="text" name="username" placeholder="e.g., admin" required>
-        </div>
-
-        <div>
-          <div class="label">Password</div>
-          <input class="input" type="password" name="password" placeholder="••••••••" required>
-        </div>
-
+      <div class="sub">
+        Your IP: <b>{{ ip }}</b>
         {% if failed %}
-          <div class="card">
-            <div class="label">Failed Attempts</div>
-            <div><b style="color: var(--warn);">{{ failed }}</b> / 5</div>
-          </div>
+          &nbsp;•&nbsp; Failed Attempts: <b>{{ failed }}</b>/5
         {% endif %}
+      </div>
+
+      <form method="POST" autocomplete="off">
+        <div class="field">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Enter username" required>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter password" required>
+        </div>
 
         {% if captcha %}
-          <div class="card">
-            <div class="label">Verification (CAPTCHA)</div>
-            <div style="margin-bottom:10px;">Solve: <b>{{ captcha_question }}</b></div>
-            <input class="input" type="number" name="captcha_answer" placeholder="Enter answer" required>
-          </div>
+        <div class="field">
+          <label>Solve CAPTCHA: <b>{{ captcha_question }}</b></label>
+          <input type="number" name="captcha_answer" placeholder="Enter answer" required>
+        </div>
         {% endif %}
 
-        <button class="btn" type="submit">Login</button>
-
-        <div class="help">
-          <span>New here? <a class="link" href="/register">Create account</a></span>
-          <span class="badge">Risk-based CAPTCHA & Lockout</span>
+        <div class="actions">
+          <button type="submit">Login</button>
         </div>
 
-        {% if error %}
-          <div class="alert">{{ error }}</div>
-        {% endif %}
-
-        <div class="footerNote">
-          Industry Features: Baseline Deviation • Credential Stuffing Detection • Explainable Decisions • Risk Analytics
+        <div class="links">
+          New here? <a href="/register">Create account</a>
         </div>
       </form>
-    </div>
-  </div>
 
-  <!-- RIGHT: Info -->
-  <div class="panel">
-    <div class="side">
-      <h2>What this system demonstrates</h2>
-      <p>
-        A security-focused authentication flow that reacts to suspicious behavior in real time.
-        Useful for showcasing defense-style monitoring and explainable risk decisions.
-      </p>
+      {% if error %}
+        <div class="error">{{ error }}</div>
+      {% endif %}
 
-      <ul class="list">
-        <li><b>Risk scoring</b> from behavior + signals (rapid attempts, new IP, unusual time)</li>
-        <li><b>Adaptive controls</b>: CAPTCHA triggers + lockout decisions</li>
-        <li><b>Attack labeling</b>: brute force / bot / credential stuffing</li>
-        <li><b>Analytics dashboard</b>: trends, top IPs, event reasons, user count</li>
-      </ul>
-
-      <div class="footerNote">
-        Tip for review: Create 2–3 users, do wrong passwords, trigger CAPTCHA, then show analytics changes.
+      <div class="meta">
+        Industry Features: Baseline Deviation • Credential Stuffing Detection • Explainable Decisions • Risk Analytics
       </div>
+
+      <!-- Optional: keep demo info but hidden -->
+      <details class="demo">
+        <summary>What this system demonstrates (click to expand)</summary>
+        <ul>
+          <li><b>Risk scoring</b> from behavior + signals (rapid attempts, new IP, unusual time)</li>
+          <li><b>Adaptive controls</b>: CAPTCHA triggers + lockout decisions</li>
+          <li><b>Attack labeling</b>: brute force / bot / credential stuffing</li>
+          <li><b>Analytics dashboard</b>: top IPs, reasons, user count, trends</li>
+        </ul>
+      </details>
+
     </div>
   </div>
-
-</div>
-
 </body>
 </html>
