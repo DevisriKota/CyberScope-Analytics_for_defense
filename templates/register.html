@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyberScope | Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="panel">
+    <div class="brand">
+      <h1>Create Account ✅</h1>
+      <div class="sub">
+        <span class="badge">Your IP: <b>{{ ip }}</b></span>
+        <span class="badge">Multi-user support</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <form class="form" method="POST">
+        <div>
+          <div class="label">Username</div>
+          <input class="input" name="username" placeholder="Choose a username" required>
+        </div>
+
+        <div class="row">
+          <div>
+            <div class="label">Password</div>
+            <input class="input" name="password" type="password" placeholder="Min 6 chars" required>
+          </div>
+          <div>
+            <div class="label">Confirm</div>
+            <input class="input" name="confirm" type="password" placeholder="Re-enter password" required>
+          </div>
+        </div>
+
+        <button class="btn" type="submit">Create Account</button>
+
+        <button class="btn btn-ghost" type="button" onclick="window.location.href='{{ url_for('login') }}'">
+          Back to Login
+        </button>
+
+        {% if error %}
+          <div class="alert">{{ error }}</div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="side">
+      <h2>Password guidance</h2>
+      <p>For demo, keep it simple but mention industry rules in review.</p>
+      <ul class="list">
+        <li>Minimum length & confirmation</li>
+        <li>Stored securely as <b>PBKDF2 hash</b> (not plain text)</li>
+        <li>All logins are tracked in analytics</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
