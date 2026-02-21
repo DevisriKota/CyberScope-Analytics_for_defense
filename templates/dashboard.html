@@ -1,20 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="container">
-    <h2>Welcome to CyberScope Dashboard</h2>
-    <p>Login Successful ✅</p>
-    <p>User: <b>{{ user }}</b></p>
-    <p>Your IP Address: <b>{{ ip }}</b></p>
+<div class="wide dashboard-wrap">
 
-    <a href="/analytics"><button>View Security Analytics</button></a>
-    <br><br>
-    <a href="/logout"><button>Logout</button></a>
+  <div class="dash-header">
+    <div>
+      <div class="dash-title">
+        <h1>Dashboard</h1>
+        <div class="dash-badge">✅</div>
+      </div>
+
+      <div class="dash-meta" style="margin-top: 12px;">
+        <div class="chip">User: <b>{{ user }}</b></div>
+        <div class="chip">IP: <b>{{ ip }}</b></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-cards">
+    <div class="dash-card">
+      <div class="label">Session</div>
+      <div class="value">Active</div>
+    </div>
+
+    <div class="dash-card">
+      <div class="label">Mode</div>
+      <div class="value">Monitoring</div>
+    </div>
+
+    <div class="dash-card">
+      <div class="label">Controls</div>
+      <div class="value">Adaptive</div>
+    </div>
+  </div>
+
+  <div class="dash-actions">
+    <a href="/analytics"><button class="btn-main">View Security Analytics</button></a>
+    <a href="/logout"><button class="btn-ghost">Logout</button></a>
+  </div>
+
 </div>
 
 </body>
